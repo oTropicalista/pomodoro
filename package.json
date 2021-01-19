@@ -1,0 +1,24 @@
+{
+  "name": "pomodoro",
+  "version": "1.0.0",
+  "description": "Cross-plataform Pomodoro timer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oTropicalista/pomodoro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oTropicalista/pomodoro/issues"
+  },
+  "homepage": "https://github.com/oTropicalista/pomodoro#readme",
+  "devDependencies": {
+    "electron": "^11.2.0",
+    "electron-reload": "^1.5.0"
+  }
+}
