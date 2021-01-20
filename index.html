@@ -1,23 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- versão de desenvolvimento, inclui avisos úteis no console  -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Pomodoro</title>
+    <!-- <https://electronjs.org/docs/tutorial/security#csp-meta-tag> -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <!--Importo o a fonte Roboto do Google Fonts -->
+    <link href="<https://fonts.googleapis.com/css2?family=Roboto&display=swap>" rel="stylesheet">
+    <link rel="stylesheet" href="my.css">
 </head>
+
 <body>
-    <div id="app">
-        {{ message }}
+    <div class="timer">
+        <h1>Pomodoro Timer</h1>
     </div>
+    <div class="todos">
+        <h2>Tarefas</h2>
+        <ul id="ulTodo">
+        </ul>
+        <div class="new_todo">
+            <input type="text" onkeyup="addNewTodo(event)" id="inputTodo" placeholder="Escreva sua tarefa...">
+            <span onclick="addNewTodo()" class="btn__add">ADD</span>
+        </div>
+    </div>
+    
     <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                message: 'Pomodoro'
+        console.log(" ---> Lendo o arquivo todos.js");
+
+        // Botão delete
+        const myNodelist = document.querySelectorAll("li");
+        myNodelist.forEach((_, index) => {
+            let span = document.createElement("span");
+            let iconDelete = document.createTextNode("\\u00D7");
+            span.className = "close";
+            span.appendChild(iconDelete);
+            myNodelist[index].appendChild(span);
+        });
+
+        // Clicando no botão para excluir a tarefa da lista
+        const closesButton = document.querySelectorAll(".close");
+
+        closesButton.forEach((_, index) => {
+            closesButton[index].onclick = function () {
+                const div = this.parentElement;
+                div.style.display = "none";
+            };
+        });
+
+        // Marca/desmarca
+        const todoList = document.querySelector("ul");
+        todoList.addEventListener(
+            "click",
+            function (e) {
+                if (e.target.tagName === "LI") {
+                    e.target.classList.toggle("checked");
+                }
+            },
+            false
+        );
+
+        // Nova tarefa com ADD ou ENTER
+        function addNewTodo(event) {
+            if (event && event.keyCode !== 13) return;
+
+            const li = document.createElement("li");
+            const inputTodo = document.getElementById("inputTodo").value;
+            let t = document.createTextNode(inputTodo);
+            li.appendChild(t);
+            if (inputTodo === "") {
+                alert("Digite alguma tarefa!");
+            } else {
+                document.getElementById("ulTodo").appendChild(li);
             }
-        })
+            document.getElementById("inputTodo").value = "";
+
+            const span = document.createElement("SPAN");
+            const iconDelete = document.createTextNode("\\u00D7");
+            span.className = "close";
+            span.appendChild(iconDelete);
+            li.appendChild(span);
+
+            span.onclick = function () {
+                const div = this.parentElement;
+                div.style.display = "none";
+            };
+        }
+
     </script>
 </body>
+
 </html>
